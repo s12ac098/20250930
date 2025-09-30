@@ -1,0 +1,26 @@
+name: Simple CI Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Run Python script
+      run: python hello.py
+
+    - name: Show GitHub Context
+      run: echo "Repository name is ${{ github.repository }}"
