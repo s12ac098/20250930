@@ -1,0 +1,30 @@
+name: Deploy Code to EC2
+
+on:
+  push:
+    branches: [ main ] # mainブランチへのプッシュで実行
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # 1. SSH接続に必要な鍵を登録
+    - name: Deploy via SSH and Git Pull
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        # EC2のパブリックIPアドレスを指定
+        host: [13.222.189.237]
+        
+        # EC2のユーザー名（Amazon Linux: ec2-user, Ubuntu: ubuntu）
+        username: ec2-user
+        
+        # GitHub Secretsに登録した秘密鍵を指定
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        
+        # EC2サーバー上で実行するコマンド
+        script: |
+          echo "Starting deployment on EC2 server..."
+          cd /var/www/my-app 
+          git pull origin main # ここでコードを更新
+          echo "Code deployment complete!"
