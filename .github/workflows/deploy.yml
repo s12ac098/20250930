@@ -14,7 +14,7 @@ jobs:
       uses: appleboy/ssh-action@v0.1.10
       with:
         # EC2のパブリックIPアドレスを指定
-        host: [13.222.189.237]
+        host: ${{ secrets.EC2_HOST_IP }}
         
         # EC2のユーザー名（Amazon Linux: ec2-user, Ubuntu: ubuntu）
         username: ec2-user
